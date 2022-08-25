@@ -1,0 +1,36 @@
+html {
+    margin: 0 auto;
+}
+
+body {
+    background-color:whitesmoke;
+    justify-items: center;
+    align-items: center;
+}
+
+h1{
+    text-align: center;
+    color: #8bd124;
+}
+
+form {
+    margin-top: 5px;
+    justify-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+label {
+    margin-top: 3px;
+    color:black;
+    margin: auto;
+}
+
+input {
+    margin-top: 5px;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
