@@ -5,5 +5,5 @@ Data is saved to data.json in format of {email: [slug1, slug2, ...]}.<br>
 This is not a secure app and should be accessible from the local network only
 
 Feel free to fork the project and add your own functionalities. <br> I might implement more precise subscription models (not only for device names)<br>
-
+![How it looks](example.png)
 
