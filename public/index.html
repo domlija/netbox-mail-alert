@@ -11,21 +11,22 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="script_index.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <p>Hello, <br> you can choose to follow a device in Axiros netbox. You will recieve an e-mail when an update of the selected device occurs.<br>
-            You have to pass a valid email and a valid device slug. 
+        <p>Hello, <br> you can choose to follow a device in netbox. You will recieve an e-mail when an update of the selected device occurs.<br>
+            You have to pass a valid email and a valid device name. 
         </p>
 
         <h1>Follow netbox device</h1>
         <form action="/add" method="post">
             <label for="fname">Email:</label><br>
             <input type="email" id="email" name="email"><br>
-            <label for="lname">device slug:</label><br>
+            <label for="lname">device name:</label><br>
             <input type="text" id="slug" name="slug"><br>
             <input type="submit" value="Submit">
         </form>
@@ -34,17 +35,25 @@
         <form action="/del" method="post">
             <label for="fname">Email:</label><br>
             <input type="email" id="email" name="email"><br>
-            <label for="lname">device slug:</label><br>
+            <label for="lname">device name:</label><br>
             <input type="text" id="slug" name="slug"><br>
             <input type="submit" value="Submit">
         </form>
 
-        <h1>Show followed devices</h1>
+        <!-- <h1>Show followed devices</h1>
         <form action="/show" method="post">
             <label for="fname">Email:</label><br>
             <input type="email" id="email" name="email"><br>
             <input type="submit" value="Submit">
-        </form>
+        </form> -->
+
+        <h1>Show followed devices</h1>
+        <label for="fname">Email:</label><br>
+        <input type="email" id="email-show" name="email"><br>
+        <button onclick="get_devices()">Show!</button>
+
+        <div class="list-div" id="list"></div>
+        <div class="list-element-div" id="helper-div" style="display: none;"></div>
         
         <script src="" async defer></script>
     </body>
