@@ -18,7 +18,8 @@ app.get('/', (req,res) => {
 })
 
 app.post('/add', (req,res) => {
-    let data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+    fs.readFile('data.json', 'utf-8', (err, data) => {
+    data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
     console.log(req.body)
     let d_map = new Map(Object.entries(data));
     let mail = req.body.email;
@@ -37,12 +38,17 @@ app.post('/add', (req,res) => {
 
     let s = JSON.stringify(Object.fromEntries(d_map));
 
-    fs.writeFileSync('data.json', s);
+    fs.writeFile('data.json', s ,(err) => {
+        console.log(err)
+    });
     res.redirect('/')
+    })
+    
 })
 
 app.post('/del', (req,res) => {
-    let data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+    fs.readFile('data.json', 'utf-8', (err, data) => {
+    data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
     console.log(req.body)
     let d_map = new Map(Object.entries(data));
     let mail = req.body.email;
@@ -64,36 +70,46 @@ app.post('/del', (req,res) => {
 
     let s = JSON.stringify(Object.fromEntries(d_map));
 
-    fs.writeFileSync('data.json', s);
+    fs.writeFile('data.json', s, (err) => {
+        console.log("up")
+    });
 
     res.redirect('/')
+    })
+    
 
 })
 
 app.post('/show', (req,res) => {
-    let data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-    console.log(req.body)
-    let d_map = new Map(Object.entries(data));
-    let mail = req.body.email;
-    let slug = req.body.slug;
+    
+    fs.readFile('data.json', 'utf-8', (err, data) => {
+        
+        data = JSON.parse(data);
+        console.log(req.body)
+        let d_map = new Map(Object.entries(data));
+        let mail = req.body.email;
+        let slug = req.body.slug;
 
-    let curr = d_map.get(mail);
+        let curr = d_map.get(mail);
 
-    if (curr == undefined) {
-        res.send("no such user!");
-        return;
-    }
-
-    res.json(JSON.stringify(curr))
+        if (curr == undefined) {
+            res.send(JSON.stringify(["no such user!"]));
+            return;
+        }
+        console.log(curr)
+        res.json(JSON.stringify(curr))
+    })
+    
 })
 
 app.post('/send', (req,res) => {
-    let data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+    fs.readFile('data.json', 'utf-8', (err, data) => {
+    data = JSON.parse(data);
     let d_map = new Map(Object.entries(data));
 
     let m_list = []
     console.log(req.body)
-    const device = req.body.data.slug
+    const device = req.body.data.name
     console.log(device)
     for (const [k,v] of Object.entries(data)) {
         if (v.includes(device)) {m_list.push(k)}
@@ -104,17 +120,17 @@ app.post('/send', (req,res) => {
         port: 465,
         secure: true,
         auth: {
-            user: '',
-            pass: ''
+            user: 'random@gmail.com',
+            pass: 'app_pass'
         }
     });
 
     let mailOptions = {
-        from: '', // sender address
+        from: '"user" <random@gmail.com>', // sender address
         to: m_list, // list of receivers
-        subject: "change", // Subject line
-        text: "", // plain text body
-        
+        subject: "my subject", // Subject line
+        text: "my message)", // plain text body
+        //html: '<b>NodeJS Email Tutorial</b>' // html body
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -124,8 +140,12 @@ app.post('/send', (req,res) => {
         console.log('Message %s sent: %s', info.messageId, info.response);
             res.send('hej');
     });
+    })
+    
+
 
 })
+
 
 
 
